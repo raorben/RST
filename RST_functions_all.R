@@ -203,7 +203,8 @@ plotMultiScale <- function(tracks,radius){
 #makes vector of just res values
 	subsetData<- tracks[,grep("res", colnames(tracks))] 
 	res<-cbind(tracks[,1:8],subsetData) 
-	a<-res%>%group_by(band)%>%summarise_each(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)),(9:length(res)))
+	a<-res%>%group_by(band)%>%select(matches("res"))%>%
+	  summarise_all(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)))
 	
 	par(mfrow = c(3, 3))
 	par(cex = 0.6)
