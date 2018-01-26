@@ -10,7 +10,7 @@
 # clear workspace and set working directory
 rm(list = ls())
 #setwd("C:\\Users\\leigh.torres\\Dropbox (HMSC - OSU)\\Data\\Campbell\\Grey-Heads\\Irina_Tolkova\\GeneralResidualMethod\\final_code")
-setwd("/Users/rachaelorben/Dropbox/Irina Tolkova/GeneralResidualMethod/final_code")
+setwd("/Users/rachaelorben/Dropbox/Research/RST")
 
 # load C function, secondary functions, plotting functions
 dyn.load("RST_residenceRadii.so") # if using a mac
@@ -42,7 +42,6 @@ lambert <- mapproject(dataset$lon, dataset$lat, projection = "lambert", paramete
 scale <- haversineDist(min(dataset$lon), min(dataset$lat), max(dataset$lon), max(dataset$lat)) / projectDist(min(lambert$x), min(lambert$y), max(lambert$x), max(lambert$y), 1)
 dataset$x <- lambert$x * scale
 dataset$y <- lambert$y * scale
-
 
 # --------------------- CALCULATING RESIDENCE VALUES --------------------- #
 # create a time array: duration of trip in given time units

@@ -203,7 +203,7 @@ plotMultiScale <- function(tracks,radius){
 #makes vector of just res values
 	subsetData<- tracks[,grep("res", colnames(tracks))] 
 	res<-cbind(tracks[,1:8],subsetData) 
-	a<-res%>%group_by(band)%>%summarise_each(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)),c(9:length(res)))
+	a<-res%>%group_by(band)%>%select(matches("res"))%>%summarise_all(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)))
 	
 	par(mfrow = c(3, 3))
 	par(cex = 0.6)
@@ -224,7 +224,8 @@ plotMultiScale <- function(tracks,radius){
 
 
 # PLOT MULTISCALE FUNCTION
-# This function accepts a dataset with residence values (time, distance, and residuals) and a vector of radius values. It plots the the percentage of Residuals for each type of point (Positive, Negative, Zeros) at each radius scale.  Radius vector must be the one that was used to create dataset. 
+# This function accepts a dataset with residence values (time, distance, and residuals) and a vector of radius values. 
+# It plots the the percentage of Residuals for each type of point (Positive, Negative, Zeros) at each radius scale.  Radius vector must be the one that was used to create dataset. 
 # This function make one plot and input should be values from one track
 
 plotMultiScale1<-function(track, radius, xmax, Resti=-10){ 
@@ -241,10 +242,10 @@ plotMultiScale1<-function(track, radius, xmax, Resti=-10){
 #makes vector of just res values
 	subsetData<- track[,grep("res", colnames(track))] 
 	res<-cbind(track[,1:8],subsetData) 
-	a<-res%>%group_by(band)%>%summarise_each(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)),c(9:length(res)))
+	a<-res%>%group_by(band)%>%select(matches("res"))%>%summarise_all(funs(Ppos = Ppos(.),Pneg = Pneg(.),Ptran = Ptran(.)))
 	
     ix<-length(radius)  
-	
+    
     plot(radius,a[i,2:(ix+1)], col="blue", xlim=c(0, xmax),ylim=c(0, 1), pch=20, ylab="Percentage of residuals",xlab="Radius (km)"); lines(radius,a[i,2:(ix+1)], col="blue",lwd=2)
     points(radius,a[i,(ix+2):((ix*2)+1)], col="red",pch=20); lines(radius,a[i,(ix+2):((ix*2)+1)], col="red",lwd=2)
     points(radius,a[i,(length(a)-ix+1):length(a)], col="black", pch=20); lines(radius,a[i,(length(a)-ix+1):length(a)], col="black",lwd=2)
