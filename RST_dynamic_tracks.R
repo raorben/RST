@@ -42,6 +42,7 @@ lambert <- mapproject(dataset$lon, dataset$lat, projection = "lambert", paramete
 scale <- haversineDist(min(dataset$lon), min(dataset$lat), max(dataset$lon), max(dataset$lat)) / projectDist(min(lambert$x), min(lambert$y), max(lambert$x), max(lambert$y), 1)
 dataset$x <- lambert$x * scale
 dataset$y <- lambert$y * scale
+plot(dataset$x,dataset$y,'l')
 
 # --------------------- CALCULATING RESIDENCE VALUES --------------------- #
 # create a time array: duration of trip in given time units
